@@ -1,0 +1,103 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Skills and Learning {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="/static/assets/plugins/chart-morris/css/morris.css">
+<style>
+.form_data{
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%,-50%);
+}
+</style>
+{% endblock stylesheets %}
+
+{%load crispy_forms_tags %} 
+{% block content %}
+
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+                        <!--[ daily sales section ] start-->
+                    
+                        <div class="col-md-12 col-xl-4">
+                            <div class="card yearly-sales">
+                                                           </div>
+                        </div>
+                    </div>
+                    
+                {% comment %} <div class="card">
+                    <h5 class="card-header">Cource Recommendation</h5>
+                    <div class="card-body">
+                    <h5 class="card-title">Recommendation List</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">View</a>
+                    </div>
+                </div> {% endcomment %}
+            
+
+<div class='card'>
+<h5 class="card-header text-center">Course Recommendation</h5>
+<div class="container">
+ <div class="row justify-content-center">
+<form  action="/apps/skill" method="post">
+    {% csrf_token %}
+    {% comment %} {{ forms|crispy }}  {% endcomment %}
+    {{ forms.input_text}} 
+    <input type="submit" value="Search"> 
+</form>
+</div>
+</div>
+
+<div class='card p-5'>
+<h5 class="card-title text-center">Recommendation List</h5>
+<div class="table-responsive">
+<table class='table table-sm table-striped'>
+<tr>
+  <th>Course Title</th>
+  <th>Subject</th>
+  <th>Url</th>
+  <th>Duration</th>
+  <th>Similarity Scores</th>
+</tr>
+{% for r in val_rec %}
+<tr>
+  <th> {{ r.0 }}</th>
+  <th> {{ r.1 }}</th>
+  <th><a href="{{ r.2 }}">Link</th>
+  <th> {{ r.3 }}</th>
+  <th> {{ r.4 }}</th>
+  {% comment %} <th> {{ val_rec.course_title }}</th>
+  <th> {{ val_rec.similarity_scores }}</th>
+  <th> {{ result.date }}</th> {% endcomment %}
+</tr> 
+{% endfor %}
+</table>
+</div>
+</div>
+</div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <script src="/static/assets/plugins/chart-morris/js/raphael.min.js"></script>
+    <script src="/static/assets/plugins/chart-morris/js/morris.min.js"></script>
+    <script src="/static/assets/js/pages/chart-morris-custom.js"></script>
+
+{% endblock javascripts %}
